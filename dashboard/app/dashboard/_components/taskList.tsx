@@ -1,39 +1,77 @@
+import { Button } from "@/components/ui/button"
+import { useState } from "react";
+
 /**
  * v0 by Vercel.
  * @see https://v0.dev/t/7ABrkEbp9iL
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-export const TaskList = () => {
+
+interface TaskListProps {
+    onClick: (data: number) => void;
+}
+
+let page: number=1;
+
+export const TaskList = (props : TaskListProps) => {
+    const [color1, setColor1] = useState("[#34D399]");
+    const [color2, setColor2] = useState("[#D1D5DB]");
+    const [color3, setColor3] = useState("[#9CA3AF]");
+    const [color4, setColor4] = useState("[#9CA3AF]");
+
+    const progress = () => {
+        if(color3 == color1) setColor4(color1);
+        if(color2 == color1) setColor3(color1);
+        setColor2(color1);
+        console.log("hello!")
+
+        handleClick();
+    }
+
+    const handleClick = () => {
+        // Assuming you have some data to send to the function in the page
+        // Call the function passed from the page with the data
+        console.log(page)
+        page++;
+        props.onClick((page));
+      }
+
     return (
-      <div className="flex items-center w-full py-4">
-        <div className="flex items-center">
-          <div className="rounded-full bg-[#34D399] text-white p-2">
-            <CheckIcon className="w-5 h-5" />
-          </div>
-          <span className="ml-2 font-semibold text-[#34D399]">Scan Container</span>
+        <div className="flex items-center w-full py-4">
+            <div className="flex items-center">
+                <div className={`rounded-full bg-${color1} text-white p-2`}>
+                    <CheckIcon className="w-5 h-5" />
+                </div>
+                <span className={`ml-2 font-semibold text-${color1}`}>Scan Container</span>
+            </div>
+            <div className={`flex-auto border-t-2 border-${color2} mx-4`} />
+            <div className="flex items-center">
+                <div className={`rounded-full bg-${color2} p-2`}>
+                    {color2 == color1 ? <CheckIcon className="w-5 h-5 text-white" /> : 
+                    <SettingsIcon className={`w-5 h-5 text-${color2}`} /> }
+                </div>
+                <span className={`ml-2 font-semibold text-${color2}`}>Scan Items</span>
+            </div>
+            <div className="flex-auto border-t-2 border-[#D1D5DB] mx-4" />
+            <div className="flex items-center">
+                <div className={`rounded-full bg-${color3} p-2`}>
+                    {color1 == color3 ? <CheckIcon className="w-5 h-5 text-white" /> : 
+                    <SettingsIcon className={`w-5 h-5 text-${color3}`} /> }
+                </div>
+                <span className={`ml-2 font-semibold text-${color3}`}>Run Simulation</span>
+            </div>
+            <div className="flex-auto border-t-2 border-[#D1D5DB] mx-4" />
+            <div className="flex items-center">
+                <div className={`rounded-full bg-${color4} p-2`}>
+                    {color4 == color1 ? <CheckIcon className="w-5 h-5 text-white" /> : 
+                    <SettingsIcon className={`w-5 h-5 text-${color4}`} /> }
+                </div>
+                <span className={`ml-2 font-semibold text-${color4}`}>Plan Route</span>
+            </div>
+            <div>
+                <Button className="ml-auto m-3" onClick={progress}>Next Task</Button>
+            </div>
         </div>
-        <div className="flex-auto border-t-2 border-[#D1D5DB] mx-4" />
-        <div className="flex items-center">
-          <div className="rounded-full bg-[#D1D5DB] p-2">
-            <SettingsIcon className="w-5 h-5 text-[#9CA3AF]" />
-          </div>
-          <span className="ml-2 font-semibold text-[#9CA3AF]">Scan Items</span>
-        </div>
-        <div className="flex-auto border-t-2 border-[#D1D5DB] mx-4" />
-        <div className="flex items-center">
-          <div className="rounded-full bg-[#D1D5DB] p-2">
-            <SettingsIcon className="w-5 h-5 text-[#9CA3AF]" />
-          </div>
-          <span className="ml-2 font-semibold text-[#9CA3AF]">Analyze Simulation</span>
-        </div>
-        <div className="flex-auto border-t-2 border-[#D1D5DB] mx-4" />
-        <div className="flex items-center">
-          <div className="rounded-full bg-[#D1D5DB] p-2">
-            <EyeIcon className="w-5 h-5 text-[#9CA3AF]" />
-          </div>
-          <span className="ml-2 font-semibold text-[#9CA3AF]">Plan Routes</span>
-        </div>
-      </div>
     )
   }
   

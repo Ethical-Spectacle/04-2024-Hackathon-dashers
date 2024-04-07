@@ -15,6 +15,7 @@ import { DisplayContainer } from "./_components/displayContainer";
 import { Simulation } from "./_components/simulation";
 import { TaskList } from "./_components/taskList";
 import { Vector3 } from "three";
+import { useState } from "react";
 
 export default function Component() {
 
@@ -28,6 +29,12 @@ export default function Component() {
     const percentUsage = (itemVolume / containerVolume);
     return percentUsage;
   }
+
+  const [tab, setTab] = useState("tab0");
+
+  const handleTabChange = (value: number) => {
+    setTab("tab"+value);
+  };
 
 
   return (
@@ -80,15 +87,15 @@ export default function Component() {
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
         <div className="w-full">
-          <TaskList/>
-          <Tabs>
+          <TaskList onClick={handleTabChange}/>
+          <Tabs value={tab}>
             <TabsList className="flex gap-4">
-              <TabsTrigger value="overview">Container</TabsTrigger>
-              <TabsTrigger value="sales">Content</TabsTrigger>
-              <TabsTrigger value="visits">Simulation</TabsTrigger>
-              <TabsTrigger value="referrals">Shipping</TabsTrigger>
+              <TabsTrigger value="tab1">Container</TabsTrigger>
+              <TabsTrigger value="tab2">Content</TabsTrigger>
+              <TabsTrigger value="tab3">Simulation</TabsTrigger>
+              <TabsTrigger value="tab4">Shipping</TabsTrigger>
             </TabsList>
-            <TabsContent value="overview">
+            <TabsContent value="tab1">
               <div className="grid items-start gap-4 md:grid-cols-2">
                 <Card className="flex flex-col">
                   <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -125,7 +132,7 @@ export default function Component() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="sales">
+            <TabsContent value="tab2">
             <div className="grid items-start gap-4 md:grid-cols-2">
                 <Card className="flex flex-col">
                   <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -163,7 +170,7 @@ export default function Component() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="visits">
+            <TabsContent value="tab3">
               <div className="flex items-center justify-center w-full p-4">
               <Card className="w-[90%] max-w-2xl">
                   <CardHeader>
@@ -179,7 +186,7 @@ export default function Component() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="referrals">
+            <TabsContent value="tab4">
             <div className="flex items-center justify-center w-full p-4">
               <Card className="w-[90%] max-w-2xl">
                   <CardHeader>
