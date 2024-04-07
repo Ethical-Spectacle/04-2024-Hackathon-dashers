@@ -6,9 +6,10 @@ authors = ["Saurabh Zinjad <zinjadsaurabh1997@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 opencv-python = "^4.9.0.80"
 opencv-contrib-python = "^4.9.0.80"
+numpy = "^1.26.4"
 
 
 [build-system]
