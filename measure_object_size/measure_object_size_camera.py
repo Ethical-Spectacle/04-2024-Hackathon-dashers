@@ -91,5 +91,9 @@ while True:
    # Remove this max value from the last element (which is a list)
     if len(final_list) == 3:
         draw_box(final_list[0],final_list[1],final_list[2])
+    
+    # TODO send client side thorugh websocket fastapi
+    
+
 cap.release()  
 cv2.destroyAllWindows()
