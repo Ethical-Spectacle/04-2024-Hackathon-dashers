@@ -36,5 +36,9 @@ export const DisplayContainer = () => {
         renderScene();
     }, []);
 
-    return <div ref={containerRef} />;
+    return (<>
+    <div>
+    {/* <img src="https://www.discovercontainers.com/wp-content/uploads/20-GP-dimensions.png" alt="Video Feed" /> */}
+    </div>
+    </>);
 };

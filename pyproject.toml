@@ -15,6 +15,7 @@ python-multipart = "^0.0.9"
 opencv-python-headless = "^4.9.0.80"
 aiortc = "^1.8.0"
 numpy = "^1.26.4"
+matplotlib = "^3.8.4"
 
 
 [build-system]
