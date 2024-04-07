@@ -9,9 +9,16 @@ aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_50)
 
 # Load Object Detector
 detector = HomogeneousBgDetector()
+final_list = []
+maxArea = 0
+# Variables for the largest object
+largest_object_rect = None
+largest_object_width = 0
+largest_object_height = 0
+largest_object_center = (0, 0)
 
 # Load Cap
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('http://192.168.210.114:8080/video')
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
@@ -21,7 +28,6 @@ while True:
     # Get Aruco marker
     corners, _, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
     if corners:
-
         # Draw polygon around the marker
         int_corners = np.int0(corners)
         cv2.polylines(img, int_corners, True, (0, 255, 0), 5)
@@ -34,31 +40,51 @@ while True:
 
         contours = detector.detect_objects(img)
 
-        # Draw objects boundaries
+        # Reset largest object data for each frame
+        maxArea = 0
+        largest_object_rect = None
+
+        # Identify the largest object
         for cnt in contours:
-            # Get rect
             rect = cv2.minAreaRect(cnt)
             (x, y), (w, h), angle = rect
 
-            # Get Width and Height of the Objects by applying the Ratio pixel to cm
             object_width = w / pixel_cm_ratio
             object_height = h / pixel_cm_ratio
 
-            # Display rectangle
-            box = cv2.boxPoints(rect)
+            # Calculate object area and compare
+            area = w * h
+            if area > maxArea and not (round(object_width) == 5 and round(object_height) == 5):
+                maxArea = area
+                largest_object_rect = rect
+                largest_object_width = object_width
+                largest_object_height = object_height
+                largest_object_center = (int(x), int(y))
+
+        # Draw the largest object after identifying it
+        if largest_object_rect is not None:
+            box = cv2.boxPoints(largest_object_rect)
             box = np.int0(box)
-
-            cv2.circle(img, (int(x), int(y)), 5, (0, 0, 255), -1)
             cv2.polylines(img, [box], True, (255, 0, 0), 2)
-            cv2.putText(img, "Width {} cm".format(round(object_width, 1)), (int(x - 100), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
-            cv2.putText(img, "Height {} cm".format(round(object_height, 1)), (int(x - 100), int(y + 15)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
-
-
+            cv2.putText(img, "Width {} cm".format(round(largest_object_width, 1)), (largest_object_center[0] - 100, largest_object_center[1] - 20), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
+            cv2.putText(img, "Height {} cm".format(round(largest_object_height, 1)), (largest_object_center[0] - 100, largest_object_center[1] + 15), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
 
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
-    if key == 27:
-        break
+    # if key == 27:  # ESC key to break
+    #     break
 
-cap.release()
+    temp_dimension = []
+    if key == 27:
+        # add dimension in temp_dimen
+        temp_dimension.append(largest_object_height)
+        temp_dimension.append(largest_object_width)
+        final_list.append(temp_dimension)
+        print(final_list)
+        continue            
+    if len(final_list == 2):
+        final_list.pop()
+    print(final_list)
+
+cap.release()  
 cv2.destroyAllWindows()
