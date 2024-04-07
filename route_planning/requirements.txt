@@ -1,0 +1,7 @@
+osmnx
+geopandas
+shapely
+plotly
+kaleido
+networkx
+pandas
