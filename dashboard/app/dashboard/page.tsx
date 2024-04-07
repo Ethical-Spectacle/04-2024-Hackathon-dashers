@@ -11,6 +11,9 @@ import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { CameraIcon } from "lucide-react";
 import { VideoCapture } from "./_components/videoCapture";
+import { DisplayContainer } from "./_components/displayContainer";
+import { Simulation } from "./_components/simulation";
+import { Vector3 } from "three";
 
 export default function Component() {
   return (
@@ -101,94 +104,63 @@ export default function Component() {
                       <div className="ml-auto">10</div>
                     </div>
                   </CardContent>
+                  <div className="flex flex-col w-full justify-center items-center rounded-sm">
+                  <DisplayContainer/>
+                  </div>
                 </Card>
               </div>
             </TabsContent>
             <TabsContent value="sales">
-              <div className="grid gap-4 md:grid-cols-2">
-                <Card>
+            <div className="grid items-start gap-4 md:grid-cols-2">
+                <Card className="flex flex-col">
                   <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                    <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    <div className="flex flex-row items-center space-y-0">
+                      <CardTitle className="text-sm font-medium">Live Camera</CardTitle>
+                    </div>
+                    <SettingsIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$45,231.89</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
+                  <CardContent className="flex flex-col items-center justify-center h-1/2 p-0">
+                    <VideoCapture/>
+                    <VideoCapture/>
                   </CardContent>
                 </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-                    <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <Card className="grid gap-2">
+                  <CardHeader className="flex flex-row items-center space-y-0">
+                    <CardTitle className="text-sm font-medium">Text Statistics</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
+                  <CardContent className="grid gap-2 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center">
+                      <div>Words</div>
+                      <div className="ml-auto">100</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div>Characters</div>
+                      <div className="ml-auto">500</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div>Sentences</div>
+                      <div className="ml-auto">10</div>
+                    </div>
                   </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                    <CreditCardIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+12,234</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-                    <ActivityIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+573</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+201 since last hour</p>
-                  </CardContent>
+                  <div className="flex flex-col w-full justify-center items-center rounded-sm">
+                  <DisplayContainer/>
+                  </div>
                 </Card>
               </div>
             </TabsContent>
             <TabsContent value="visits">
-              <div className="grid gap-4 md:grid-cols-2">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                    <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <div className="flex items-center justify-center w-full p-4">
+              <Card className="w-[90%] max-w-2xl">
+                  <CardHeader>
+                    <CardTitle>Simulation</CardTitle>
+                    <Simulation container={new Vector3(10,15,40)} items={[{ position: new Vector3(5,5,5), size: new Vector3(5,5,5) },
+                      { position: new Vector3(2,7,5), size: new Vector3(1,3,5) },{ position: new Vector3(0,5,5), size: new Vector3(1,3,2) },
+                      { position: new Vector3(5,5,5), size: new Vector3(5,5,5) },{ position: new Vector3(3,5,8), size: new Vector3(5,2,5) },
+                      { position: new Vector3(5,5,5), size: new Vector3(1,5,3) },{ position: new Vector3(5,5,12), size: new Vector3(1,5,5) }
+                      ,{ position: new Vector3(5,12,5), size: new Vector3(5,7,5) }
+                      
+                    ]}/>
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$45,231.89</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-                    <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                    <CreditCardIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+12,234</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-                    <ActivityIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+573</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+201 since last hour</p>
-                  </CardContent>
                 </Card>
               </div>
             </TabsContent>
