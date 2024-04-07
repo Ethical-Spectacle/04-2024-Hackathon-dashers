@@ -6,12 +6,14 @@ import numpy as np
 parameters = cv2.aruco.DetectorParameters()
 aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_50)
 
-
+datalist = []
+measurelist = []
+maxArea = 0 
 # Load Object Detector
 detector = HomogeneousBgDetector()
 
 # Load Image
-img = cv2.imread("IMG_8453.JPG")
+img = cv2.imread("IMG_8456.JPG")
 
 # Get Aruco marker
 corners, _, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
@@ -37,6 +39,18 @@ for cnt in contours:
     # Get Width and Height of the Objects by applying the Ratio pixel to cm
     object_width = w / pixel_cm_ratio
     object_height = h / pixel_cm_ratio
+    if (round(object_width) == 5) and (round(object_height) == 5):
+        continue
+    else:
+        localarea = round(object_height) * round(object_width)
+        if localarea > maxArea:
+            maxArea = localarea
+            datalist = []
+            measurelist.append(round(object_height))
+            measurelist.append(round(object_width))
+            datalist.append(measurelist)
+    measurelist = []
+
 
     # Display rectangle
     box = cv2.boxPoints(rect)
@@ -47,7 +61,6 @@ for cnt in contours:
     cv2.putText(img, "Width {} cm".format(round(object_width, 1)), (int(x - 100), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
     cv2.putText(img, "Height {} cm".format(round(object_height, 1)), (int(x - 100), int(y + 15)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
 
-
-
-cv2.imshow("Image", img)
-cv2.waitKey(0)
+# cv2.imshow("Image", img)
+# cv2.waitKey(0)
+print(datalist)
