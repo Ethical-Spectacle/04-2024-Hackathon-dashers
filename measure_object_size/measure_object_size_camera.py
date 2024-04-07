@@ -1,6 +1,8 @@
 import cv2
 from object_detector import *
 import numpy as np
+import itertools
+from box_render import draw_box
 
 # Load Aruco detector
 parameters = cv2.aruco.DetectorParameters()
@@ -80,11 +82,14 @@ while True:
         temp_dimension.append(largest_object_height)
         temp_dimension.append(largest_object_width)
         final_list.append(temp_dimension)
-        print(final_list)
         continue            
-    if len(final_list == 2):
-        final_list.pop()
-    print(final_list)
+    if len(final_list) == 2 and len(final_list[-1]) == 2:
+        max_value = max(final_list[-1])  # Find the max value in the last element of final_list
+        final_list[-1].remove(max_value)
+        final_list = list(itertools.chain.from_iterable(final_list))
 
+   # Remove this max value from the last element (which is a list)
+    if len(final_list) == 3:
+        draw_box(final_list[0],final_list[1],final_list[2])
 cap.release()  
 cv2.destroyAllWindows()
