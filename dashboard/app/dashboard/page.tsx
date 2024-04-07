@@ -13,9 +13,23 @@ import { CameraIcon } from "lucide-react";
 import { VideoCapture } from "./_components/videoCapture";
 import { DisplayContainer } from "./_components/displayContainer";
 import { Simulation } from "./_components/simulation";
+import { TaskList } from "./_components/taskList";
 import { Vector3 } from "three";
 
 export default function Component() {
+
+
+  const getPercentUsage = (container: Vector3,items: {position: Vector3, size: Vector3}[]) => {
+    const containerVolume = container.x * container.y * container.z;
+    let itemVolume = 0;
+    items.forEach((item) => {
+        itemVolume += item.size.x * item.size.y * item.size.z;
+    });
+    const percentUsage = (itemVolume / containerVolume);
+    return percentUsage;
+  }
+
+
   return (
     <div className="flex flex-col w-full min-h-screen">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
@@ -66,6 +80,7 @@ export default function Component() {
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
         <div className="w-full">
+          <TaskList/>
           <Tabs>
             <TabsList className="flex gap-4">
               <TabsTrigger value="overview">Container</TabsTrigger>
@@ -165,46 +180,13 @@ export default function Component() {
               </div>
             </TabsContent>
             <TabsContent value="referrals">
-              <div className="grid gap-4 md:grid-cols-2">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                    <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            <div className="flex items-center justify-center w-full p-4">
+              <Card className="w-[90%] max-w-2xl">
+                  <CardHeader>
+                    <CardTitle>Map</CardTitle>
+                    <iframe className="rounded-lg" width="100%" height="500px" src="https://www.openstreetmap.org/export/embed.html?bbox=-111.85043334960939%2C31.722326680224338%2C-110.33020019531251%2C32.74108223150125&amp;layer=mapnik">
+                      </iframe><br/><small><a href="https://www.openstreetmap.org/#map=10/32.2331/-111.0903">View Larger Map</a></small>
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$45,231.89</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-                    <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                    <CreditCardIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+12,234</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-                    <ActivityIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+573</div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">+201 since last hour</p>
-                  </CardContent>
                 </Card>
               </div>
             </TabsContent>

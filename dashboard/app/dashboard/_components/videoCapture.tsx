@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { CameraIcon } from "lucide-react";
+import Stream from "./streaming";
 
 export const VideoCapture = () => {
 
@@ -26,6 +27,7 @@ export const VideoCapture = () => {
                         <CameraIcon className="w-6 h-6" />
                         <span className="sr-only">Take Picture</span>
                       </Button>
+                      <Stream/>
                       </>
     )
 }
