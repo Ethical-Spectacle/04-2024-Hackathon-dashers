@@ -6,7 +6,7 @@ class DatasetCreator:
     """
     A class to create a dataset for the box packing problem, including truck dimensions and box parameters.
     """
-    def __init__(self, min_boxes=10, max_boxes=100, min_value=50, max_value=500,
+    def __init__(self, min_boxes=10, max_boxes=500, min_value=50, max_value=500,
                  max_truck_dim=(1000, 1000, 1000), min_truck_dim=(50, 50, 50)):
         """
         Initializes the DatasetCreator with parameters for box and truck dimension ranges.
